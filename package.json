@@ -1,6 +1,6 @@
 {
   "name": "hy-event-store",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "An event-based global state management tool for vue, react, mini-program, ect.",
   "main": "src/index.js",
   "scripts": {
@@ -9,6 +9,12 @@
   },
   "author": "coderwhy",
   "license": "MIT",
+  "keywords": [
+    "state managment",
+    "mini-program",
+    "vue",
+    "react"
+  ],
   "devDependencies": {
     "axios": "^0.24.0"
   }

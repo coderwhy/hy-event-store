@@ -17,6 +17,9 @@ const lileiCallback1 = (...payload) => {
 eventBus.on("why", whyCallback1)
 eventBus.on("why", whyCallback2)
 eventBus.on('lilei', lileiCallback1)
+eventBus.once("why", (...payload) => {
+  console.log("why once:", payload)
+})
 
 setTimeout(() => {
   eventBus.emit("why", "abc", "cba", "nba")

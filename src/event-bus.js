@@ -25,6 +25,23 @@ class HYEventBus {
     return this
   }
 
+  once(eventName, eventCallback, thisArg) {
+    if (typeof eventName !== "string") {
+      throw new TypeError("the event name must be string type")
+    }
+
+    if (typeof eventCallback !== "function") {
+      throw new TypeError("the event callback must be function type")
+    }
+    
+    const tempCallback = (...payload) => {
+      this.off(eventName, tempCallback)
+      eventCallback.apply(thisArg, payload)
+    }
+
+    return this.on(eventName, tempCallback, thisArg)
+  }
+
   emit(eventName, ...payload) {
     if (typeof eventName !== "string") {
       throw new TypeError("the event name must be string type")
