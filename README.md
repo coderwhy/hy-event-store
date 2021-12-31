@@ -1,5 +1,5 @@
 # hy-event-store
-An event-based global state management tool for vue, react, mini-program, ect.
+An event-based global state management tool for vue, react, mini-program, etc.
 
 一个基于事件的全局状态管理工具，可以在Vue、React、小程序等任何地方使用。
 
