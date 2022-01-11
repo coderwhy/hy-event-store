@@ -18,6 +18,7 @@ class HYEventStore {
     this.state = options.state
     this._observe(options.state)
     this.event = new EventBus()
+    this.eventV2 = new EventBus()
   }
 
   _observe(state) {
@@ -32,6 +33,7 @@ class HYEventStore {
           if (_value === newValue) return
           _value = newValue
           _this.event.emit(key, _value)
+          _this.eventV2.emit(key, { [key]: _value })
         }
       })
     })
@@ -40,9 +42,8 @@ class HYEventStore {
   onState(stateKey, stateCallback) {
     const keys = Object.keys(this.state)
     if (keys.indexOf(stateKey) === -1) {
-      throw new Error("then state does not contain your key")
+      throw new Error("the state does not contain your key")
     }
-
     this.event.on(stateKey, stateCallback)
 
     // callback
@@ -53,7 +54,37 @@ class HYEventStore {
     stateCallback.apply(this.state, [value])
   }
 
+  // ["name", "age"] callback1
+  // ["name", "height"] callback2
+
+  onStates(statekeys, stateCallback) {
+    const keys = Object.keys(this.state)
+    const value = {}
+    for (const theKey of statekeys) {
+      if (keys.indexOf(theKey) === -1) {
+        throw new Error("the state does not contain your key")
+      }
+      this.eventV2.on(theKey, stateCallback)
+      value[theKey] = this.state[theKey]
+    }
+
+    stateCallback.apply(this.state, [value])
+  }
+
+  offStates(stateKeys, stateCallback) {
+    stateKeys.forEach(theKey => {
+      if (keys.indexOf(stateKey) === -1) {
+        throw new Error("the state does not contain your key")
+      }
+      this.eventV2.off(theKey, stateCallback)
+    })
+  }
+
   offState(stateKey, stateCallback) {
+    const keys = Object.keys(this.state)
+    if (keys.indexOf(stateKey) === -1) {
+      throw new Error("the state does not contain your key")
+    }
     this.event.off(stateKey, stateCallback)
   }
 
