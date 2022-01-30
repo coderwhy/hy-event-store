@@ -72,8 +72,9 @@ class HYEventStore {
   }
 
   offStates(stateKeys, stateCallback) {
+    const keys = Object.keys(this.state)
     stateKeys.forEach(theKey => {
-      if (keys.indexOf(stateKey) === -1) {
+      if (keys.indexOf(theKey) === -1) {
         throw new Error("the state does not contain your key")
       }
       this.eventV2.off(theKey, stateCallback)
