@@ -1,5 +1,5 @@
 const EventBus = require("./event-bus")
-const { isObject } = require('./utils')
+const { isObject } = require("./utils")
 
 class HYEventStore {
   constructor(options) {
@@ -15,27 +15,21 @@ class HYEventStore {
       }
       this.actions = options.actions
     }
-    this.state = options.state
-    this._observe(options.state)
+    this.state = this.reactive(options.state)
     this.event = new EventBus()
     this.eventV2 = new EventBus()
   }
-
-  _observe(state) {
-    const _this = this
-    Object.keys(state).forEach(key => {
-      let _value = state[key]
-      Object.defineProperty(state, key, {
-        get: function() {
-          return _value
-        },
-        set: function(newValue) {
-          if (_value === newValue) return
-          _value = newValue
-          _this.event.emit(key, _value)
-          _this.eventV2.emit(key, { [key]: _value })
-        }
-      })
+  reactive(state) {
+    return new Proxy(state, {
+      get: (target, key) => {
+        return Reflect.get(target, key) 
+      },
+      set: (target, key, newValue) => {
+        Reflect.set(target, key, newValue)
+        this.event.emit(key, newValue) 
+        this.eventV2.emit(key, { [key]: newValue })
+        return true
+      },
     })
   }
 
@@ -57,10 +51,10 @@ class HYEventStore {
   // ["name", "age"] callback1
   // ["name", "height"] callback2
 
-  onStates(statekeys, stateCallback) {
+  onStates(stateKeys, stateCallback) {
     const keys = Object.keys(this.state)
     const value = {}
-    for (const theKey of statekeys) {
+    for (const theKey of stateKeys) {
       if (keys.indexOf(theKey) === -1) {
         throw new Error("the state does not contain your key")
       }
@@ -73,7 +67,7 @@ class HYEventStore {
 
   offStates(stateKeys, stateCallback) {
     const keys = Object.keys(this.state)
-    stateKeys.forEach(theKey => {
+    stateKeys.forEach((theKey) => {
       if (keys.indexOf(theKey) === -1) {
         throw new Error("the state does not contain your key")
       }
