@@ -12,13 +12,13 @@ class HYEventBus {
       throw new TypeError("the event callback must be function type")
     }
     
-    let hanlders = this.eventBus[eventName]
-    if (!hanlders) {
-      hanlders = []
-      this.eventBus[eventName] = hanlders
+    const handlers = this.eventBus[eventName]
+    if (!handlers) {
+      this.eventBus[eventName] = [{ eventCallback, thisArg }]
+      return
     }
 
-    hanlders.push({
+    handlers.push({
       eventCallback,
       thisArg
     })
