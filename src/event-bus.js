@@ -4,14 +4,14 @@ class HYEventBus {
   }
 
   on(eventName, eventCallback, thisArg) {
-    if (typeof eventName !== "string") {
-      throw new TypeError("the event name must be string type")
+    if (typeof eventName !== "string" && typeof eventName !== "symbol") {
+      throw new TypeError("the event name must be string type or symbol type")
     }
 
     if (typeof eventCallback !== "function") {
       throw new TypeError("the event callback must be function type")
     }
-    
+
     let hanlders = this.eventBus[eventName]
     if (!hanlders) {
       hanlders = []
@@ -26,14 +26,14 @@ class HYEventBus {
   }
 
   once(eventName, eventCallback, thisArg) {
-    if (typeof eventName !== "string") {
-      throw new TypeError("the event name must be string type")
+    if (typeof eventName !== "string" && typeof eventName !== "symbol") {
+      throw new TypeError("the event name must be string type or symbol type")
     }
 
     if (typeof eventCallback !== "function") {
       throw new TypeError("the event callback must be function type")
     }
-    
+
     const tempCallback = (...payload) => {
       this.off(eventName, tempCallback)
       eventCallback.apply(thisArg, payload)
@@ -43,8 +43,8 @@ class HYEventBus {
   }
 
   emit(eventName, ...payload) {
-    if (typeof eventName !== "string") {
-      throw new TypeError("the event name must be string type")
+    if (typeof eventName !== "string" && typeof eventName !== "symbol") {
+      throw new TypeError("the event name must be string type or symbol type")
     }
 
     const handlers = this.eventBus[eventName] || []
@@ -55,8 +55,8 @@ class HYEventBus {
   }
 
   off(eventName, eventCallback) {
-    if (typeof eventName !== "string") {
-      throw new TypeError("the event name must be string type")
+    if (typeof eventName !== "string" && typeof eventName !== "symbol") {
+      throw new TypeError("the event name must be string type or symbol type")
     }
 
     if (typeof eventCallback !== "function") {
