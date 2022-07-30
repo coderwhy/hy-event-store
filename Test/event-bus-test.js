@@ -35,3 +35,12 @@ setTimeout(() => {
   eventBus.emit("why")
   eventBus.emit("lilei")
 }, 3000);
+
+setTimeout(() => {
+  eventBus.clear()
+}, 4000);
+
+setTimeout(() => {
+    eventBus.emit("why")
+    eventBus.emit("lilei")
+}, 5000);
