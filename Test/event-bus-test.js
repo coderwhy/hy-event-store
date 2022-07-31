@@ -7,7 +7,7 @@ const whyCallback1 = (...payload) => {
 }
 
 const whyCallback2 = (...payload) => {
-  console.log("whyCallback1:", payload)
+  console.log("whyCallback2:", payload)
 }
 
 const lileiCallback1 = (...payload) => {
