@@ -79,6 +79,17 @@ class HYEventBus {
       delete this.eventBus[eventName]
     }
   }
+
+  clear(...eventNames) {
+    if (!eventNames.length) {
+      this.eventBus = {}
+      return
+    }
+    if (eventNames.some(eventName => typeof eventName !== 'string')) {
+      throw new TypeError("the event name must be string type")
+    }
+    eventNames.forEach(eventName => delete this.eventBus[eventName])
+  }
 }
 
 module.exports = HYEventBus

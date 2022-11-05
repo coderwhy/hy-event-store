@@ -7,11 +7,15 @@ const whyCallback1 = (...payload) => {
 }
 
 const whyCallback2 = (...payload) => {
-  console.log("whyCallback1:", payload)
+  console.log("whyCallback2:", payload)
 }
 
 const lileiCallback1 = (...payload) => {
   console.log("lileiCallback1:", payload)
+}
+
+const ztCallback1 = (...payload) => {
+  console.log('ztCallback1', payload)
 }
 
 eventBus.on("why", whyCallback1)
@@ -20,18 +24,23 @@ eventBus.on('lilei', lileiCallback1)
 eventBus.once("why", (...payload) => {
   console.log("why once:", payload)
 })
+eventBus.on('zzt', ztCallback1)
 
 setTimeout(() => {
   eventBus.emit("why", "abc", "cba", "nba")
   eventBus.emit("lilei", "abc", "cba", "nba")
+  eventBus.emit("zzt", "abc", "cba", "nba")
 }, 1000);
 
 setTimeout(() => {
   eventBus.off("why", whyCallback1)
   eventBus.off("lilei", lileiCallback1)
+  eventBus.clear('zzt')
+  eventBus.clear()
 }, 2000);
 
 setTimeout(() => {
   eventBus.emit("why")
   eventBus.emit("lilei")
+  eventBus.emit('zzt')
 }, 3000);
