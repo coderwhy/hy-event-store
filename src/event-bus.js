@@ -79,6 +79,14 @@ class HYEventBus {
       delete this.eventBus[eventName]
     }
   }
+
+  clear() {
+    this.emitBus = {}
+  }
+
+  hasEvent(eventName) {
+    return Object.keys(this.emitBus).includes(eventName)
+  }
 }
 
 module.exports = HYEventBus
