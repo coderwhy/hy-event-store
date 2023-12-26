@@ -101,7 +101,7 @@ class HYEventStore {
       throw new Error("this action name does not exist, please check it")
     }
     const actionFn = this.actions[actionName]
-    actionFn.apply(this, [this.state, ...args])
+   return actionFn.apply(this, [this.state, ...args])
   }
 }
 
