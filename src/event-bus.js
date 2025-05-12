@@ -65,15 +65,10 @@ class HYEventBus {
 
     const handlers = this.eventBus[eventName]
     if (handlers && eventCallback) {
-      const newHandlers = [...handlers]
-      for (let i = 0; i < newHandlers.length; i++) {
-        const handler = newHandlers[i]
-        if (handler.eventCallback === eventCallback) {
-          const index = handlers.indexOf(handler)
-          handlers.splice(index, 1)
-        }
-      }
-    }
+			this.eventBus[eventName] = handlers.filter(
+				handler => handler.eventCallback !== eventCallback
+			);
+		}
 
     if (handlers.length === 0) {
       delete this.eventBus[eventName]
