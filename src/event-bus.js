@@ -1,6 +1,6 @@
 class HYEventBus {
   constructor() {
-    this.eventBus = {}
+    this.eventBus = Object.create(null)
   }
 
   on(eventName, eventCallback, thisArg) {
@@ -80,7 +80,7 @@ class HYEventBus {
   }
 
   clear() {
-    this.eventBus = {}
+    this.eventBus = Object.create(null)
     return this
   }
 

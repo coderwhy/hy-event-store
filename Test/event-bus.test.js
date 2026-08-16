@@ -3,14 +3,17 @@ const assert = require("node:assert/strict")
 
 const { HYEventBus } = require("../src")
 
-test("on and emit deliver every payload", () => {
+test("on and emit deliver every payload with the configured context", () => {
   const bus = new HYEventBus()
   const calls = []
+  const context = { name: "context" }
 
-  bus.on("update", (...payload) => calls.push(payload))
-  bus.emit("update", "name", 42)
+  assert.equal(bus.on("update", function(...payload) {
+    calls.push([this, ...payload])
+  }, context), bus)
+  assert.equal(bus.emit("update", "name", 42), bus)
 
-  assert.deepEqual(calls, [["name", 42]])
+  assert.deepEqual(calls, [[context, "name", 42]])
 })
 
 test("once does not skip the next handler", () => {
@@ -51,4 +54,31 @@ test("clear removes every registered event", () => {
   assert.equal(bus.clear(), bus)
   assert.equal(bus.hasEvent("one"), false)
   assert.equal(bus.hasEvent("two"), false)
+})
+
+test("event names cannot collide with object prototype properties", () => {
+  const bus = new HYEventBus()
+  const calls = []
+
+  for (const eventName of ["constructor", "toString", "__proto__"]) {
+    bus.on(eventName, () => calls.push(eventName))
+    bus.emit(eventName)
+  }
+
+  assert.deepEqual(calls, ["constructor", "toString", "__proto__"])
+})
+
+test("public methods validate event names and callbacks", () => {
+  const bus = new HYEventBus()
+  const invalidName = 42
+  const invalidCallback = "callback"
+
+  assert.throws(() => bus.on(invalidName, () => {}), /event name/)
+  assert.throws(() => bus.on("event", invalidCallback), /event callback/)
+  assert.throws(() => bus.once(invalidName, () => {}), /event name/)
+  assert.throws(() => bus.once("event", invalidCallback), /event callback/)
+  assert.throws(() => bus.emit(invalidName), /event name/)
+  assert.throws(() => bus.off(invalidName, () => {}), /event name/)
+  assert.throws(() => bus.off("event", invalidCallback), /event callback/)
+  assert.throws(() => bus.hasEvent(invalidName), /event name/)
 })
