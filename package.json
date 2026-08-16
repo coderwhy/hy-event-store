@@ -1,21 +1,30 @@
 {
   "name": "hy-event-store",
   "version": "1.3.1",
-  "description": "An event-based global state management tool for vue, react, mini-program, ect.",
+  "description": "A zero-dependency event bus and global state store for Vue, React, Mini Programs, and vanilla JavaScript.",
   "main": "src/index.js",
+  "files": [
+    "src"
+  ],
   "scripts": {
-    "test-bus": "node ./Test/event-bus-test.js",
-    "test-store": "node ./Test/event-store-test.js"
+    "test": "node --test Test/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage Test/*.test.js"
   },
   "author": "coderwhy",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coderwhy/hy-event-store.git"
+  },
+  "bugs": {
+    "url": "https://github.com/coderwhy/hy-event-store/issues"
+  },
+  "homepage": "https://github.com/coderwhy/hy-event-store#readme",
   "keywords": [
-    "state managment",
+    "state-management",
+    "event-bus",
     "mini-program",
     "vue",
     "react"
-  ],
-  "devDependencies": {
-    "axios": "^0.24.0"
-  }
+  ]
 }
