@@ -1,6 +1,6 @@
 class HYEventBus {
   constructor() {
-    this.eventBus = {}
+    this.eventBus = Object.create(null)
   }
 
   on(eventName, eventCallback, thisArg) {
@@ -48,7 +48,8 @@ class HYEventBus {
     }
 
     const handlers = this.eventBus[eventName] || []
-    handlers.forEach(handler => {
+    // Use a snapshot so handlers can safely remove themselves while emitting.
+    handlers.slice().forEach(handler => {
       handler.eventCallback.apply(handler.thisArg, payload)
     })
     return this
@@ -64,28 +65,32 @@ class HYEventBus {
     }
 
     const handlers = this.eventBus[eventName]
-    if (handlers && eventCallback) {
-      const newHandlers = [...handlers]
-      for (let i = 0; i < newHandlers.length; i++) {
-        const handler = newHandlers[i]
-        if (handler.eventCallback === eventCallback) {
-          const index = handlers.indexOf(handler)
-          handlers.splice(index, 1)
-        }
-      }
+    if (!handlers) {
+      return this
     }
 
-    if (handlers.length === 0) {
+    this.eventBus[eventName] = handlers.filter(handler => {
+      return handler.eventCallback !== eventCallback
+    })
+
+    if (this.eventBus[eventName].length === 0) {
       delete this.eventBus[eventName]
     }
+    return this
   }
 
   clear() {
-    this.emitBus = {}
+    this.eventBus = Object.create(null)
+    return this
   }
 
   hasEvent(eventName) {
-    return Object.keys(this.emitBus).includes(eventName)
+    if (typeof eventName !== "string") {
+      throw new TypeError("the event name must be string type")
+    }
+
+    const handlers = this.eventBus[eventName]
+    return Boolean(handlers && handlers.length)
   }
 }
 

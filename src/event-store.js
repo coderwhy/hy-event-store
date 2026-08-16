@@ -3,10 +3,18 @@ const { isObject } = require('./utils')
 
 class HYEventStore {
   constructor(options) {
+    if (!isObject(options)) {
+      throw new TypeError("the options must be object type")
+    }
     if (!isObject(options.state)) {
       throw new TypeError("the state must be object type")
     }
-    if (options.actions && isObject(options.actions)) {
+
+    this.actions = {}
+    if (options.actions !== undefined) {
+      if (!isObject(options.actions)) {
+        throw new TypeError("the actions must be object type")
+      }
       const values = Object.values(options.actions)
       for (const value of values) {
         if (typeof value !== "function") {
@@ -44,12 +52,11 @@ class HYEventStore {
     if (keys.indexOf(stateKey) === -1) {
       throw new Error("the state does not contain your key")
     }
-    this.event.on(stateKey, stateCallback)
-
-    // callback
     if (typeof stateCallback !== "function") {
       throw new TypeError("the event callback must be function type")
     }
+
+    this.event.on(stateKey, stateCallback)
     const value = this.state[stateKey]
     stateCallback.apply(this.state, [value])
   }
@@ -58,12 +65,22 @@ class HYEventStore {
   // ["name", "height"] callback2
 
   onStates(statekeys, stateCallback) {
+    if (!Array.isArray(statekeys)) {
+      throw new TypeError("the state keys must be array type")
+    }
+    if (typeof stateCallback !== "function") {
+      throw new TypeError("the event callback must be function type")
+    }
+
     const keys = Object.keys(this.state)
-    const value = {}
     for (const theKey of statekeys) {
       if (keys.indexOf(theKey) === -1) {
         throw new Error("the state does not contain your key")
       }
+    }
+
+    const value = {}
+    for (const theKey of statekeys) {
       this.eventV2.on(theKey, stateCallback)
       value[theKey] = this.state[theKey]
     }
@@ -72,11 +89,21 @@ class HYEventStore {
   }
 
   offStates(stateKeys, stateCallback) {
+    if (!Array.isArray(stateKeys)) {
+      throw new TypeError("the state keys must be array type")
+    }
+    if (typeof stateCallback !== "function") {
+      throw new TypeError("the event callback must be function type")
+    }
+
     const keys = Object.keys(this.state)
-    stateKeys.forEach(theKey => {
+    for (const theKey of stateKeys) {
       if (keys.indexOf(theKey) === -1) {
         throw new Error("the state does not contain your key")
       }
+    }
+
+    stateKeys.forEach(theKey => {
       this.eventV2.off(theKey, stateCallback)
     })
   }
@@ -90,6 +117,9 @@ class HYEventStore {
   }
 
   setState(stateKey, stateValue) {
+    if (Object.keys(this.state).indexOf(stateKey) === -1) {
+      throw new Error("the state does not contain your key")
+    }
     this.state[stateKey] = stateValue
   }
 
@@ -101,7 +131,7 @@ class HYEventStore {
       throw new Error("this action name does not exist, please check it")
     }
     const actionFn = this.actions[actionName]
-    actionFn.apply(this, [this.state, ...args])
+    return actionFn.apply(this, [this.state, ...args])
   }
 }
 
