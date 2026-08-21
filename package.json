@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "files": [
     "src",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "README.zh-CN.md"
   ],
   "scripts": {
     "test": "node --test Test/*.test.js",
