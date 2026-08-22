@@ -2,7 +2,14 @@
 
 All notable changes to `hy-event-store` are documented in this file.
 
-## 1.4.0 (unreleased)
+## Unreleased
+
+### Added
+
+- Add first-party TypeScript declarations for event payloads, state keys,
+  actions, and action return values, plus compile-time regression coverage.
+
+## 1.4.0 - 2026-08-19
 
 ### Added
 
