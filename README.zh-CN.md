@@ -22,10 +22,27 @@
 npm install hy-event-store
 ~~~
 
-当前包提供 CommonJS 入口：
+当前包提供 CommonJS 入口，并内置第一方 TypeScript 声明：
 
 ~~~js
 const { HYEventBus, HYEventStore } = require("hy-event-store")
+~~~
+
+TypeScript 用户无需改变运行时 API，即可补充事件和状态类型：
+
+~~~ts
+const bus = new HYEventBus<{ ready: []; signedIn: [user: { name: string }] }>()
+bus.on("signedIn", user => console.log(user.name))
+
+const store = new HYEventStore({
+  state: { count: 0 },
+  actions: {
+    increment(state, amount: number) {
+      state.count += amount
+      return state.count
+    }
+  }
+})
 ~~~
 
 ## 快速开始
@@ -164,7 +181,7 @@ store.offStates(["count", "status"], renderProfile)
 
 发布包为 CommonJS，且没有运行时依赖。CI 在 Node.js 18 至 26 上验证。浏览器和小程序项目应通过各自的 npm 包构建或打包流程使用本包。
 
-原生 ESM 导出、TypeScript 声明、只读状态选择器与 <code>onStates</code> 的完整快照模式属于后续设计项，详见[路线图](ROADMAP.md)。
+原生 ESM 导出、只读状态选择器与 <code>onStates</code> 的完整快照模式属于后续设计项，详见[路线图](ROADMAP.md)。
 
 ## 开发
 

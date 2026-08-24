@@ -3,14 +3,20 @@
   "version": "1.4.0",
   "description": "A zero-dependency event bus and global state store for Vue, React, Mini Programs, and vanilla JavaScript.",
   "main": "src/index.js",
+  "types": "index.d.ts",
   "files": [
     "src",
     "CHANGELOG.md",
-    "README.zh-CN.md"
+    "README.zh-CN.md",
+    "index.d.ts"
   ],
   "scripts": {
     "test": "node --test Test/*.test.js",
-    "test:coverage": "node --test --experimental-test-coverage Test/*.test.js"
+    "test:coverage": "node --test --experimental-test-coverage Test/*.test.js",
+    "test:types": "tsc --noEmit --strict --skipLibCheck --module commonjs --moduleResolution node --target es2020 Test/types.test.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
   },
   "author": "coderwhy",
   "license": "MIT",

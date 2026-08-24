@@ -26,10 +26,28 @@ Mini Program build workflows.
 npm install hy-event-store
 ~~~
 
-The package currently exposes a CommonJS entry point:
+The package exposes a CommonJS entry point and ships first-party TypeScript
+declarations:
 
 ~~~js
 const { HYEventBus, HYEventStore } = require("hy-event-store")
+~~~
+
+TypeScript users can add event and state types without changing the runtime API:
+
+~~~ts
+const bus = new HYEventBus<{ ready: []; signedIn: [user: { name: string }] }>()
+bus.on("signedIn", user => console.log(user.name))
+
+const store = new HYEventStore({
+  state: { count: 0 },
+  actions: {
+    increment(state, amount: number) {
+      state.count += amount
+      return state.count
+    }
+  }
+})
 ~~~
 
 ## Quick start
@@ -181,9 +199,9 @@ The distributed package is CommonJS and has no runtime dependencies. CI
 validates the package on Node.js 18 through 26. Browser and Mini Program
 projects should use their normal npm-package build or bundling workflow.
 
-Native ESM exports, TypeScript declarations, a read-only state selector, and
-an opt-in full snapshot mode for <code>onStates</code> are planned design
-improvements; see the [roadmap](ROADMAP.md).
+Native ESM exports, a read-only state selector, and an opt-in full snapshot
+mode for <code>onStates</code> are planned design improvements; see the
+[roadmap](ROADMAP.md).
 
 ## Development
 
