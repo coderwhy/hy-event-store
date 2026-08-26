@@ -20,6 +20,7 @@ class HYEventBus {
 
     handlers.push({
       eventCallback,
+      originalCallback: eventCallback,
       thisArg
     })
     return this
@@ -39,7 +40,9 @@ class HYEventBus {
       eventCallback.apply(thisArg, payload)
     }
 
-    return this.on(eventName, tempCallback, thisArg)
+    this.on(eventName, tempCallback, thisArg)
+    this.eventBus[eventName][this.eventBus[eventName].length - 1].originalCallback = eventCallback
+    return this
   }
 
   emit(eventName, ...payload) {
@@ -70,7 +73,7 @@ class HYEventBus {
     }
 
     this.eventBus[eventName] = handlers.filter(handler => {
-      return handler.eventCallback !== eventCallback
+      return handler.eventCallback !== eventCallback && handler.originalCallback !== eventCallback
     })
 
     if (this.eventBus[eventName].length === 0) {

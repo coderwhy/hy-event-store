@@ -8,6 +8,8 @@ All notable changes to `hy-event-store` are documented in this file.
 
 - Add first-party TypeScript declarations for event payloads, state keys,
   actions, and action return values, plus compile-time regression coverage.
+- Allow <code>off</code> to cancel a pending <code>once</code> listener by using
+  the original callback reference.
 
 ## 1.4.0 - 2026-08-19
 

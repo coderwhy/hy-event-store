@@ -29,6 +29,21 @@ test("once does not skip the next handler", () => {
   assert.deepEqual(calls, ["once", "always", "always"])
 })
 
+test("off cancels a once listener by its original callback", () => {
+  const bus = new HYEventBus()
+  let calls = 0
+  const callback = () => {
+    calls += 1
+  }
+
+  bus.once("update", callback)
+  bus.off("update", callback)
+  bus.emit("update")
+
+  assert.equal(calls, 0)
+  assert.equal(bus.hasEvent("update"), false)
+})
+
 test("off is safe for missing events and removes matching handlers", () => {
   const bus = new HYEventBus()
   const callback = () => {}
