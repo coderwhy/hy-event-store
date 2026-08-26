@@ -150,7 +150,7 @@ store.offStates(["count", "status"], renderProfile)
 | <code>on(eventName, callback, thisArg?)</code> | 注册监听器。 | 事件总线实例 |
 | <code>once(eventName, callback, thisArg?)</code> | 注册仅在第一次触发时执行的监听器。 | 事件总线实例 |
 | <code>emit(eventName, ...payload)</code> | 通知某个事件的全部监听器。 | 事件总线实例 |
-| <code>off(eventName, callback)</code> | 移除指定回调的监听；事件不存在时也可安全调用。 | 事件总线实例 |
+| <code>off(eventName, callback)</code> | 移除通过 <code>on</code> 或 <code>once</code> 注册的回调；事件不存在时也可安全调用。 | 事件总线实例 |
 | <code>clear()</code> | 清除全部事件的监听器。 | 事件总线实例 |
 | <code>hasEvent(eventName)</code> | 判断事件是否至少有一个监听器。 | 布尔值 |
 

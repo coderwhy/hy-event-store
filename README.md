@@ -156,7 +156,7 @@ store.offStates(["count", "status"], renderProfile)
 | <code>on(eventName, callback, thisArg?)</code> | Register a listener. | The event bus |
 | <code>once(eventName, callback, thisArg?)</code> | Register a listener removed before its first callback runs. | The event bus |
 | <code>emit(eventName, ...payload)</code> | Notify every listener for an event. | The event bus |
-| <code>off(eventName, callback)</code> | Remove registrations for the exact callback. It is safe when the event has no listeners. | The event bus |
+| <code>off(eventName, callback)</code> | Remove registrations for the callback passed to <code>on</code> or <code>once</code>. It is safe when the event has no listeners. | The event bus |
 | <code>clear()</code> | Remove listeners for every event. | The event bus |
 | <code>hasEvent(eventName)</code> | Check whether an event has at least one listener. | Boolean |
 
