@@ -3,6 +3,13 @@ const assert = require("node:assert/strict")
 
 const { HYEventStore } = require("../src")
 
+test("package root exposes the public constructors", () => {
+  const pkg = require("..")
+
+  assert.equal(typeof pkg.HYEventBus, "function")
+  assert.equal(typeof pkg.HYEventStore, "function")
+})
+
 test("constructor validates options, state, and actions", () => {
   assert.throws(() => new HYEventStore(), /options must be object/)
   assert.throws(() => new HYEventStore({}), /state must be object/)

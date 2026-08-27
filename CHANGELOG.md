@@ -10,6 +10,8 @@ All notable changes to `hy-event-store` are documented in this file.
   actions, and action return values, plus compile-time regression coverage.
 - Allow <code>off</code> to cancel a pending <code>once</code> listener by using
   the original callback reference.
+- Document the supported package-name import path for WeChat Mini Programs and
+  add a package-root entry-point regression test.
 
 ## 1.4.0 - 2026-08-19
 

@@ -45,6 +45,19 @@ const store = new HYEventStore({
 })
 ~~~
 
+### 小程序项目接入
+
+当前发布包使用 CommonJS。在微信开发者工具中，请启用**使用 npm 模块**，
+执行**构建 npm**，然后使用包名导入：
+
+~~~js
+const { HYEventStore } = require("hy-event-store")
+~~~
+
+不要直接导入 `src/event-store.js` 或 `store/hy-event-store.js` 这类路径。
+这些路径指向源码文件，并不是构建后的小程序模块入口。如果使用其他构建
+工具，请配置它从 `node_modules` 解析 CommonJS 包，并保持使用包名导入。
+
 ## 快速开始
 
 ### 事件总线
