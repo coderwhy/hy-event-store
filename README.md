@@ -50,6 +50,20 @@ const store = new HYEventStore({
 })
 ~~~
 
+### Mini Program projects
+
+The package currently uses CommonJS. In WeChat DevTools, enable **Use npm
+modules**, run **Build npm**, and then import the package by its package name:
+
+~~~js
+const { HYEventStore } = require("hy-event-store")
+~~~
+
+Do not import `src/event-store.js` or a path such as `store/hy-event-store.js`.
+Those paths refer to source files and are not the built Mini Program module
+entry. If you use another bundler, configure it to resolve CommonJS packages
+from `node_modules` and keep the same package-name import.
+
 ## Quick start
 
 ### Event bus

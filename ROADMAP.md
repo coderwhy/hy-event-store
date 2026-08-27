@@ -23,7 +23,8 @@ These items need API design or compatibility research before implementation:
 
 - Add first-party TypeScript declarations and compile-time coverage
   ([#25](https://github.com/coderwhy/hy-event-store/issues/25)).
-- Document and test CommonJS, ESM, and Mini Program import paths
+- Document and test CommonJS and Mini Program import paths; native ESM remains
+  a separate compatibility item
   ([#27](https://github.com/coderwhy/hy-event-store/issues/27)).
 - Evaluate a read-only state getter
   ([#26](https://github.com/coderwhy/hy-event-store/issues/26)).
