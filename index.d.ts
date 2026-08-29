@@ -99,6 +99,8 @@ export class HYEventStore<
     stateValue: State[Key]
   ): void;
 
+  getState<Key extends StateKey<State>>(stateKey: Key): State[Key];
+
   dispatch<ActionName extends Extract<keyof Actions, string>>(
     actionName: ActionName,
     ...args: ActionArguments<State, Actions[ActionName]>

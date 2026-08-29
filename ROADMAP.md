@@ -26,7 +26,7 @@ These items need API design or compatibility research before implementation:
 - Document and test CommonJS and Mini Program import paths; native ESM remains
   a separate compatibility item
   ([#27](https://github.com/coderwhy/hy-event-store/issues/27)).
-- Evaluate a read-only state getter
+- Add a read-only state getter
   ([#26](https://github.com/coderwhy/hy-event-store/issues/26)).
 - Explore an opt-in full snapshot for `onStates`
   ([#24](https://github.com/coderwhy/hy-event-store/issues/24)).

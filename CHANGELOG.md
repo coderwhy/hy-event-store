@@ -12,6 +12,8 @@ All notable changes to `hy-event-store` are documented in this file.
   the original callback reference.
 - Document the supported package-name import path for WeChat Mini Programs and
   add a package-root entry-point regression test.
+- Add `getState(key)` for reading a declared state value without subscribing to
+  updates.
 
 ## 1.4.0 - 2026-08-19
 
