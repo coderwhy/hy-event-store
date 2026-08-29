@@ -1,6 +1,6 @@
 {
   "name": "hy-event-store",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A zero-dependency event bus and global state store for Vue, React, Mini Programs, and vanilla JavaScript.",
   "main": "src/index.js",
   "types": "index.d.ts",
