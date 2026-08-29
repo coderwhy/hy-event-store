@@ -123,6 +123,13 @@ class HYEventStore {
     this.state[stateKey] = stateValue
   }
 
+  getState(stateKey) {
+    if (Object.keys(this.state).indexOf(stateKey) === -1) {
+      throw new Error("the state does not contain your key")
+    }
+    return this.state[stateKey]
+  }
+
   dispatch(actionName, ...args) {
     if (typeof actionName !== "string") {
       throw new TypeError("the action name must be string type")

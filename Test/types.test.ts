@@ -45,12 +45,16 @@ store.onStates(["count", "status"], change => {
 
 store.setState("count", 1)
 store.setState("status", "ready")
+const currentCount: number = store.getState("count")
+const currentStatus: "idle" | "ready" = store.getState("status")
 
 const nextCount: number = store.dispatch("increment", 2)
 const loaded: Promise<string> = store.dispatch("load", "home")
 
 // @ts-expect-error State keys must exist in the declared state object.
 store.setState("missing", 1)
+// @ts-expect-error getState only accepts declared state keys.
+store.getState("missing")
 // @ts-expect-error State values must match their declared key type.
 store.setState("count", "1")
 // @ts-expect-error Action arguments are inferred from the action signature.

@@ -147,6 +147,16 @@ async function loadData() {
 <code>onState</code> invokes its callback immediately with the current value,
 then again when that key changes.
 
+Read one declared value without subscribing to updates:
+
+~~~js
+const status = store.getState("status")
+~~~
+
+<code>getState</code> does not notify listeners and throws for an undeclared key.
+It returns the current value as-is; it is not a deep clone or deep read-only
+snapshot.
+
 Subscribe to several keys with <code>onStates</code>:
 
 ~~~js
@@ -190,6 +200,7 @@ Create a store with a required <code>state</code> object and an optional
 | <code>onStates(keys, callback)</code> | Subscribe to several declared keys and immediately receive their initial snapshot. Later callbacks contain changed keys only. |
 | <code>offStates(keys, callback)</code> | Remove a multi-key subscription. |
 | <code>setState(key, value)</code> | Update a declared state key. |
+| <code>getState(key)</code> | Read one declared state value without subscribing. |
 | <code>dispatch(actionName, ...args)</code> | Run an action and return its value unchanged, including a Promise. |
 
 ## Usage notes

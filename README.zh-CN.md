@@ -140,6 +140,15 @@ async function loadData() {
 
 <code>onState</code> 会先立即以当前值调用一次回调，之后在对应状态键变更时再次调用。
 
+如需读取一个已声明的状态值，但不订阅更新，可以使用：
+
+~~~js
+const status = store.getState("status")
+~~~
+
+<code>getState</code> 不会通知监听器，读取未声明的键时会抛出错误。它会原样
+返回当前值，不会创建深拷贝，也不是深层只读快照。
+
 使用 <code>onStates</code> 订阅多个状态键：
 
 ~~~js
@@ -180,6 +189,7 @@ store.offStates(["count", "status"], renderProfile)
 | <code>onStates(keys, callback)</code> | 订阅多个已声明状态键，并立即收到初始快照；后续回调只包含变化的键。 |
 | <code>offStates(keys, callback)</code> | 取消多状态订阅。 |
 | <code>setState(key, value)</code> | 更新已声明的状态键。 |
+| <code>getState(key)</code> | 读取一个已声明的状态值，不建立订阅。 |
 | <code>dispatch(actionName, ...args)</code> | 运行 action，并原样返回它的结果，包括 Promise。 |
 
 ## 使用注意事项

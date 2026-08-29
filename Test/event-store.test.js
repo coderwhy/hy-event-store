@@ -53,6 +53,21 @@ test("onStates reports the initial snapshot and changed key until removed", () =
   ])
 })
 
+test("getState reads a declared value without notifying listeners", () => {
+  const store = new HYEventStore({ state: { count: 0 } })
+  let notifications = 0
+  store.onState("count", () => {
+    notifications += 1
+  })
+
+  assert.equal(store.getState("count"), 0)
+  assert.equal(notifications, 1)
+  store.setState("count", 1)
+  assert.equal(store.getState("count"), 1)
+  assert.equal(notifications, 2)
+  assert.throws(() => store.getState("missing"), /does not contain/)
+})
+
 test("dispatch returns synchronous action results", () => {
   const store = new HYEventStore({
     state: { count: 1 },
